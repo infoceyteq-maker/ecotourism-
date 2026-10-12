@@ -1,8 +1,9 @@
-const RAINFOREST = "/images/eminence-rainforest-retreat.jpg";
-const PAVILION = "/images/eminence-wellness-garden.jpg";
-const ROOM = "/images/eminence-eco-chalet.jpg";
-const GARDEN = "/images/eminence-wellness-garden.jpg";
-const DINING = "/images/eminence-organic-table.jpg";
+const B = import.meta.env.BASE_URL;
+const RAINFOREST = B + "images/eminence-rainforest-retreat.jpg";
+const PAVILION = B + "images/eminence-wellness-garden.jpg";
+const ROOM = B + "images/eminence-eco-chalet.jpg";
+const GARDEN = B + "images/eminence-wellness-garden.jpg";
+const DINING = B + "images/eminence-organic-table.jpg";
 
 export const navigationGroups = [
   {

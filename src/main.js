@@ -5,15 +5,20 @@ const HOTEL_NAME = "Eminence Shire Hotel";
 const CONTACT_EMAIL = "Hotel.eminens@gamil.com";
 const CONTACT_PHONE = "+94776655493";
 
+// Deployment base path ( "/" in dev/preview, "/ecotourism-/" on GitHub Pages ).
+const BASE = import.meta.env.BASE_URL;
+const withBase = (path) => BASE + String(path).replace(/^\//, "");
+const stripBase = (pathname) => (BASE !== "/" && pathname.startsWith(BASE) ? "/" + pathname.slice(BASE.length) : pathname);
+
 const ASSET = {
-  hills: "/images/eminence-rainforest-retreat.jpg",
-  pavilion: "/images/eminence-wellness-garden.jpg",
-  chalets: "/images/eminence-eco-chalet.jpg",
-  room: "/images/eminence-eco-chalet.jpg",
-  pool: "/images/eminence-wellness-garden.jpg",
-  dining: "/images/eminence-organic-table.jpg",
-  cuisine: "/images/eminence-organic-table.jpg",
-  valley: "/images/eminence-rainforest-retreat.jpg",
+  hills: withBase("images/eminence-rainforest-retreat.jpg"),
+  pavilion: withBase("images/eminence-wellness-garden.jpg"),
+  chalets: withBase("images/eminence-eco-chalet.jpg"),
+  room: withBase("images/eminence-eco-chalet.jpg"),
+  pool: withBase("images/eminence-wellness-garden.jpg"),
+  dining: withBase("images/eminence-organic-table.jpg"),
+  cuisine: withBase("images/eminence-organic-table.jpg"),
+  valley: withBase("images/eminence-rainforest-retreat.jpg"),
 };
 
 const arrow = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 5l7 7-7 7" /></svg>`;
@@ -51,7 +56,7 @@ function canonicalRoute(path) {
 }
 
 function getRoute() {
-  return canonicalRoute(window.location.pathname);
+  return canonicalRoute(stripBase(window.location.pathname));
 }
 
 const routes = {
@@ -129,29 +134,29 @@ const galleryItems = [
 
 function routeLink(path, label, className = "") {
   if (/^https?:\/\//.test(path)) return `<a class="${className}" href="${path}" target="_blank" rel="noreferrer">${label}</a>`;
-  return `<a class="${className}" href="${path}" data-route="${path}">${label}</a>`;
+  return `<a class="${className}" href="${withBase(path)}" data-route="${path}">${label}</a>`;
 }
 
 function renderHeader(route) {
   const active = (path) => route === path || route.startsWith(`${path}/`) ? " is-current" : "";
   const menuGroups = navigationGroups.map((group) => `
     <section class="menu-group">
-      <a class="menu-group-title" href="${group.path}" data-route="${group.path}">${group.title} ${arrow}</a>
+      <a class="menu-group-title" href="${withBase(group.path)}" data-route="${group.path}">${group.title} ${arrow}</a>
       <nav aria-label="${group.title}">${group.links.map(([label, path]) => routeLink(path, label, `menu-link${active(path)}`)).join("")}</nav>
     </section>`).join("");
   return `
     <header class="site-header" id="site-header">
       <div class="header-inner">
-        <a class="brand" href="/" data-route="/" aria-label="Eminence Shire Hotel home">
+        <a class="brand" href="${withBase("/")}" data-route="/" aria-label="Eminence Shire Hotel home">
           <span class="brand-name">Eminence Shire Hotel</span>
           <span class="brand-caption">GALLE, SRI LANKA</span>
         </a>
         <nav class="desktop-nav" aria-label="Main navigation">
-          <a class="nav-link${active("/wellness")}" href="/wellness" data-route="/wellness">Wellness</a>
-          <a class="nav-link${active("/accommodation")}" href="/accommodation" data-route="/accommodation">Accommodation</a>
-          <a class="nav-link${active("/dining")}" href="/dining" data-route="/dining">Dining</a>
-          <a class="nav-link${active("/about")}" href="/about" data-route="/about">Resort overview</a>
-          <a class="nav-link${active("/gallery")}" href="/gallery" data-route="/gallery">Gallery</a>
+          <a class="nav-link${active("/wellness")}" href="${withBase("/wellness")}" data-route="/wellness">Wellness</a>
+          <a class="nav-link${active("/accommodation")}" href="${withBase("/accommodation")}" data-route="/accommodation">Accommodation</a>
+          <a class="nav-link${active("/dining")}" href="${withBase("/dining")}" data-route="/dining">Dining</a>
+          <a class="nav-link${active("/about")}" href="${withBase("/about")}" data-route="/about">Resort overview</a>
+          <a class="nav-link${active("/gallery")}" href="${withBase("/gallery")}" data-route="/gallery">Gallery</a>
         </nav>
         <div class="header-actions">
           <button class="header-book" type="button" data-book>Book your stay <span>${arrow}</span></button>
@@ -212,7 +217,7 @@ function renderSectionIntro(eyebrow, title, text, align = "center") {
 function renderImageCard({ eyebrow, title, text, image, path, link = "Discover more", index = "" }) {
   return `
     <article class="image-card">
-      <a class="image-card-photo" href="${path}" data-route="${path}" aria-label="${title}" style="--card-image:url('${image}')">
+      <a class="image-card-photo" href="${withBase(path)}" data-route="${path}" aria-label="${title}" style="--card-image:url('${image}')">
         <span class="image-card-number">${index}</span>
         <span class="image-card-arrow">${arrow}</span>
       </a>
@@ -235,7 +240,7 @@ function renderHome() {
         <div><span class="fact-number fact-word">ORGANIC</span><span class="fact-label">wellness and<br>seasonal dining</span></div>
         <span class="fact-rule"></span>
         <div><span class="fact-mark">∞</span><span class="fact-label">room to breathe<br>and reconnect</span></div>
-        <a href="/destination" data-route="/destination" class="facts-location">PITIGALA, GALLE ${arrow}</a>
+        <a href="${withBase("/destination")}" data-route="/destination" class="facts-location">PITIGALA, GALLE ${arrow}</a>
       </section>
 
       <section class="welcome-section section-pad">
@@ -295,11 +300,11 @@ function renderHome() {
         </div>
         <div class="stay-grid">
           <article class="stay-card stay-card-large">
-            <a href="/accommodation" data-route="/accommodation" class="stay-photo" style="--card-image:url('${ASSET.room}')" aria-label="Forest-view rooms"><span class="stay-count">A QUIET FOREST STAY</span><span class="image-card-arrow">${arrow}</span></a>
+            <a href="${withBase("/accommodation")}" data-route="/accommodation" class="stay-photo" style="--card-image:url('${ASSET.room}')" aria-label="Forest-view rooms"><span class="stay-count">A QUIET FOREST STAY</span><span class="image-card-arrow">${arrow}</span></a>
             <div class="stay-meta"><div><span class="eyebrow">REST CLOSE TO NATURE</span><h3>Forest-View Rooms</h3></div>${routeLink("/accommodation", "Discover", "text-link")}</div>
           </article>
           <article class="stay-card">
-            <a href="/accommodation" data-route="/accommodation" class="stay-photo stay-photo-offset" style="--card-image:url('${ASSET.hills}')" aria-label="Garden rooms"><span class="stay-count">GREEN GARDEN SURROUNDS</span><span class="image-card-arrow">${arrow}</span></a>
+            <a href="${withBase("/accommodation")}" data-route="/accommodation" class="stay-photo stay-photo-offset" style="--card-image:url('${ASSET.hills}')" aria-label="Garden rooms"><span class="stay-count">GREEN GARDEN SURROUNDS</span><span class="image-card-arrow">${arrow}</span></a>
             <div class="stay-meta"><div><span class="eyebrow">PRIVATE & RESTFUL</span><h3>Garden Rooms</h3></div>${routeLink("/accommodation", "Discover", "text-link")}</div>
           </article>
         </div>
@@ -473,7 +478,7 @@ function renderContactForm() {
       <form id="contact-form" class="contact-form">
         <div class="contact-form-grid"><label>First name<input name="firstName" autocomplete="given-name" required></label><label>Last name<input name="lastName" autocomplete="family-name" required></label><label>Email address<input name="email" type="email" autocomplete="email" required></label><label>Phone<input name="phone" type="tel" autocomplete="tel"></label><label>Country<input name="country" autocomplete="country-name"></label><label>Purpose of enquiry<select name="purpose"><option>Reservation</option><option>Marketing / PR</option><option>Host a Retreat</option><option>General enquiry</option></select></label></div>
         <label class="contact-message-label">Subject<textarea name="subject" rows="4" required></textarea></label>
-        <label class="contact-consent"><input type="checkbox" required><span>I have read the <a href="/privacy-policy" data-route="/privacy-policy">Privacy Notice</a>.</span></label>
+        <label class="contact-consent"><input type="checkbox" required><span>I have read the <a href="${withBase("/privacy-policy")}" data-route="/privacy-policy">Privacy Notice</a>.</span></label>
         <button class="button button-dark" type="submit">Inquire now ${arrow}</button><p id="contact-status" class="contact-status" aria-live="polite"></p>
       </form>
     </section>`;
@@ -510,12 +515,12 @@ function renderFooter() {
   return `
     <footer class="site-footer">
       <div class="footer-top">
-        <div class="footer-brand-block"><a class="brand brand-footer" href="/" data-route="/"><span class="brand-name">Eminence Shire Hotel</span><span class="brand-caption">GALLE, SRI LANKA</span></a><p>Eco-friendly hospitality.<br>Organic wellness.</p><span class="footer-coordinates">PITIGALA · SOUTHERN PROVINCE</span></div>
+        <div class="footer-brand-block"><a class="brand brand-footer" href="${withBase("/")}" data-route="/"><span class="brand-name">Eminence Shire Hotel</span><span class="brand-caption">GALLE, SRI LANKA</span></a><p>Eco-friendly hospitality.<br>Organic wellness.</p><span class="footer-coordinates">PITIGALA · SOUTHERN PROVINCE</span></div>
         <div class="footer-column"><span class="eyebrow">EXPLORE</span>${routeLink("/philosophy", "Our Approach")}${routeLink("/wellness/programs", "Wellness Experiences")}${routeLink("/accommodation", "Accommodation")}${routeLink("/dining", "Organic Dining")}${routeLink("/facilities", "Hotel Facilities")}${routeLink("/offers", "Stay Offers")}${routeLink("/destination", "Sinharaja & Galle")}${routeLink("/gallery", "Gallery")}</div>
         <div class="footer-column footer-contact"><span class="eyebrow">FIND US</span><p>Eminence Shire Hotel<br>Thannavilla, Bangamukanda<br>Godamunna, Pitigala<br>Galle District, Southern Province<br>Sri Lanka</p><a href="tel:${CONTACT_PHONE}">+94 77 66 55 4 93 · Call us</a><a href="mailto:Hotel.eminens@gamil.com">Hotel.eminens@gamil.com</a>${routeLink("/contact", `Send an enquiry ${arrow}`)}</div>
-        <div class="footer-newsletter"><span class="eyebrow">A NOTE FROM PITIGALA</span><h3>Stay close<br>to nature.</h3><p>Get in touch for seasonal updates and stay information.</p><form class="newsletter-form" id="newsletter-form"><label class="sr-only" for="newsletter-email">Email address</label><input id="newsletter-email" name="email" type="email" placeholder="Your email address" required><button type="submit" aria-label="Subscribe">${arrow}</button><label class="newsletter-consent"><input type="checkbox" required><span>I have read the <a href="/privacy-policy" data-route="/privacy-policy">Privacy Notice</a>.</span></label></form><p class="newsletter-status" id="newsletter-status" aria-live="polite"></p></div>
+        <div class="footer-newsletter"><span class="eyebrow">A NOTE FROM PITIGALA</span><h3>Stay close<br>to nature.</h3><p>Get in touch for seasonal updates and stay information.</p><form class="newsletter-form" id="newsletter-form"><label class="sr-only" for="newsletter-email">Email address</label><input id="newsletter-email" name="email" type="email" placeholder="Your email address" required><button type="submit" aria-label="Subscribe">${arrow}</button><label class="newsletter-consent"><input type="checkbox" required><span>I have read the <a href="${withBase("/privacy-policy")}" data-route="/privacy-policy">Privacy Notice</a>.</span></label></form><p class="newsletter-status" id="newsletter-status" aria-live="polite"></p></div>
       </div>
-      <div class="footer-bottom"><span>© 2026 Eminence Shire Hotel</span><span class="footer-bottom-note">Thannavilla · Pitigala · Galle District</span><a href="/privacy-policy" data-route="/privacy-policy">Privacy Notice</a></div>
+      <div class="footer-bottom"><span>© 2026 Eminence Shire Hotel</span><span class="footer-bottom-note">Thannavilla · Pitigala · Galle District</span><a href="${withBase("/privacy-policy")}" data-route="/privacy-policy">Privacy Notice</a></div>
     </footer>`;
 }
 
@@ -590,7 +595,7 @@ function setDateDefaults() {
 
 function navigate(path) {
   const target = canonicalRoute(path);
-  if (target !== getRoute()) window.history.pushState({}, "", target);
+  if (target !== getRoute()) window.history.pushState({}, "", withBase(target));
   document.body.classList.remove("menu-open");
   window.scrollTo({ top: 0, behavior: "auto" });
   render();
@@ -604,6 +609,10 @@ function openDialog(id) {
 function closeOpenDialog() {
   document.querySelectorAll("dialog[open]").forEach((dialog) => dialog.close());
 }
+
+// Recover the intended route when GitHub Pages' 404.html hands it over via ?r=
+const recoveredRoute = new URLSearchParams(window.location.search).get("r");
+if (recoveredRoute) window.history.replaceState({}, "", withBase(canonicalRoute(recoveredRoute)));
 
 render();
 
