@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Eminence Shire Hotel</title>
+    <script>
+      // GitHub Pages has no SPA rewrites: hand the attempted path back to the
+      // app via ?r= so deep links keep working under the /ecotourism-/ prefix.
+      (function () {
+        var base = "/ecotourism-/";
+        var path = location.pathname;
+        if (path.indexOf(base) === 0 && !location.search) {
+          var route = "/" + path.slice(base.length);
+          location.replace(base + "?r=" + encodeURIComponent(route) + location.hash);
+        } else if (location.hostname.indexOf("github.io") !== -1) {
+          location.replace(base);
+        } else {
+          location.replace("/");
+        }
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>
