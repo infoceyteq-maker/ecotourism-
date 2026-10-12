@@ -143,8 +143,8 @@ function renderHeader(route) {
     <header class="site-header" id="site-header">
       <div class="header-inner">
         <a class="brand" href="/" data-route="/" aria-label="Eminence Shire Hotel home">
-          <span class="brand-name">EMINENCE</span>
-          <span class="brand-caption">SHIRE HOTEL <i></i> GALLE, SRI LANKA</span>
+          <span class="brand-name">Eminence Shire Hotel</span>
+          <span class="brand-caption">GALLE, SRI LANKA</span>
         </a>
         <nav class="desktop-nav" aria-label="Main navigation">
           <a class="nav-link${active("/wellness")}" href="/wellness" data-route="/wellness">Wellness</a>
@@ -510,7 +510,7 @@ function renderFooter() {
   return `
     <footer class="site-footer">
       <div class="footer-top">
-        <div class="footer-brand-block"><a class="brand brand-footer" href="/" data-route="/"><span class="brand-name">EMINENCE</span><span class="brand-caption">SHIRE HOTEL <i></i> GALLE, SRI LANKA</span></a><p>Eco-friendly hospitality.<br>Organic wellness.</p><span class="footer-coordinates">PITIGALA · SOUTHERN PROVINCE</span></div>
+        <div class="footer-brand-block"><a class="brand brand-footer" href="/" data-route="/"><span class="brand-name">Eminence Shire Hotel</span><span class="brand-caption">GALLE, SRI LANKA</span></a><p>Eco-friendly hospitality.<br>Organic wellness.</p><span class="footer-coordinates">PITIGALA · SOUTHERN PROVINCE</span></div>
         <div class="footer-column"><span class="eyebrow">EXPLORE</span>${routeLink("/philosophy", "Our Approach")}${routeLink("/wellness/programs", "Wellness Experiences")}${routeLink("/accommodation", "Accommodation")}${routeLink("/dining", "Organic Dining")}${routeLink("/facilities", "Hotel Facilities")}${routeLink("/offers", "Stay Offers")}${routeLink("/destination", "Sinharaja & Galle")}${routeLink("/gallery", "Gallery")}</div>
         <div class="footer-column footer-contact"><span class="eyebrow">FIND US</span><p>Eminence Shire Hotel<br>Thannavilla, Bangamukanda<br>Godamunna, Pitigala<br>Galle District, Southern Province<br>Sri Lanka</p><a href="tel:${CONTACT_PHONE}">+94 77 66 55 4 93 · Call us</a><a href="mailto:Hotel.eminens@gamil.com">Hotel.eminens@gamil.com</a>${routeLink("/contact", `Send an enquiry ${arrow}`)}</div>
         <div class="footer-newsletter"><span class="eyebrow">A NOTE FROM PITIGALA</span><h3>Stay close<br>to nature.</h3><p>Get in touch for seasonal updates and stay information.</p><form class="newsletter-form" id="newsletter-form"><label class="sr-only" for="newsletter-email">Email address</label><input id="newsletter-email" name="email" type="email" placeholder="Your email address" required><button type="submit" aria-label="Subscribe">${arrow}</button><label class="newsletter-consent"><input type="checkbox" required><span>I have read the <a href="/privacy-policy" data-route="/privacy-policy">Privacy Notice</a>.</span></label></form><p class="newsletter-status" id="newsletter-status" aria-live="polite"></p></div>
