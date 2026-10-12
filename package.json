@@ -5,9 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
+    "prebuild": "rm -rf assets images 404.html",
     "build": "vite build",
-    "build:pages": "vite build --base=/ecotourism-/ --outDir dist-pages",
-    "deploy:pages": "npm run build:pages && rm -rf docs && mv dist-pages docs",
     "preview": "vite preview --host 0.0.0.0"
   },
   "devDependencies": {
